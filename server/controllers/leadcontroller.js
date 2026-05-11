@@ -9,16 +9,16 @@ const getLeads = async (req, res) => {
 
     res.json(result.rows);
   } catch (error) {
-    console.log("DATABASE ERROR:", error);
+    console.log("GET ERROR:", error);
 
     res.status(500).json({
-      error: error.message,
+      message: "Server Error",
     });
   }
 };
 
-// Add new lead
-const addLead = async (req, res) => {
+// Create new lead
+const createLead = async (req, res) => {
   try {
     const { name, phone, source } = req.body;
 
@@ -29,33 +29,33 @@ const addLead = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (error) {
-    console.log(error);
+    console.log("CREATE ERROR:", error);
 
     res.status(500).json({
-      error: error.message,
+      message: "Server Error",
     });
   }
 };
 
-// Update status
-const updateLeadStatus = async (req, res) => {
+// Update lead status
+const updateLead = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
 
     await pool.query(
-      "UPDATE leads SET status=$1 WHERE id=$2",
+      "UPDATE leads SET status = $1 WHERE id = $2",
       [status, id]
     );
 
     res.json({
-      message: "Status updated",
+      message: "Lead updated successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("UPDATE ERROR:", error);
 
     res.status(500).json({
-      error: error.message,
+      message: "Server Error",
     });
   }
 };
@@ -66,25 +66,25 @@ const deleteLead = async (req, res) => {
     const { id } = req.params;
 
     await pool.query(
-      "DELETE FROM leads WHERE id=$1",
+      "DELETE FROM leads WHERE id = $1",
       [id]
     );
 
     res.json({
-      message: "Lead deleted",
+      message: "Lead deleted successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("DELETE ERROR:", error);
 
     res.status(500).json({
-      error: error.message,
+      message: "Server Error",
     });
   }
 };
 
 module.exports = {
   getLeads,
-  addLead,
-  updateLeadStatus,
+  createLead,
+  updateLead,
   deleteLead,
 };
