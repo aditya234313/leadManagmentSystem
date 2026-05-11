@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 const getLeads = async (req, res) => {
   try {
@@ -8,10 +8,16 @@ const getLeads = async (req, res) => {
 
     res.json(result.rows);
   } catch (error) {
-    res.status(500).json(error.message);
+    console.log(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
   }
 };
 
+module.exports = {
+  getLeads,
+};
 const addLead = async (req, res) => {
   try {
     const { name, phone, source } = req.body;
