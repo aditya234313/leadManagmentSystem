@@ -4,7 +4,7 @@ function LeadList({ leads, fetchLeads }) {
   const updateStatus = async (id, status) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/leads/${id}`,
+        `https://leadmanagmentsystem-1.onrender.com/${id}`,
         { status }
       );
 
@@ -17,7 +17,7 @@ function LeadList({ leads, fetchLeads }) {
   const deleteLead = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/leads/${id}`
+        `https://leadmanagmentsystem-1.onrender.com/${id}`
       );
 
       fetchLeads();

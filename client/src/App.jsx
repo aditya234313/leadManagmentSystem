@@ -10,7 +10,7 @@ function App() {
   const fetchLeads = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/leads"
+        "https://leadmanagmentsystem-1.onrender.com"
       );
 
       setLeads(response.data);
