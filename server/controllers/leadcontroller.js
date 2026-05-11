@@ -9,12 +9,12 @@ const getLeads = async (req, res) => {
 
     res.json(result.rows);
   } catch (error) {
-    console.log("GET ERROR:", error);
+  console.log(error);
 
-    res.status(500).json({
-      message: "Server Error",
-    });
-  }
+  res.status(500).json({
+    error: error.message
+  });
+}
 };
 
 // Create new lead
@@ -29,12 +29,12 @@ const createLead = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (error) {
-    console.log("CREATE ERROR:", error);
+  console.log(error);
 
-    res.status(500).json({
-      message: "Server Error",
-    });
-  }
+  res.status(500).json({
+    error: error.message
+  });
+}
 };
 
 // Update lead status
@@ -51,13 +51,13 @@ const updateLead = async (req, res) => {
     res.json({
       message: "Lead updated successfully",
     });
-  } catch (error) {
-    console.log("UPDATE ERROR:", error);
+  }catch (error) {
+  console.log(error);
 
-    res.status(500).json({
-      message: "Server Error",
-    });
-  }
+  res.status(500).json({
+    error: error.message
+  });
+}
 };
 
 // Delete lead
@@ -74,12 +74,12 @@ const deleteLead = async (req, res) => {
       message: "Lead deleted successfully",
     });
   } catch (error) {
-    console.log("DELETE ERROR:", error);
+  console.log(error);
 
-    res.status(500).json({
-      message: "Server Error",
-    });
-  }
+  res.status(500).json({
+    error: error.message
+  });
+}
 };
 
 module.exports = {
