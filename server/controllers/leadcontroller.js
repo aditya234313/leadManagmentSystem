@@ -35,6 +35,8 @@ const addLead = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (error) {
+    console.log("DATABASE ERROR:", error);
+    
     res.status(500).json(error.message);
   }
 };
