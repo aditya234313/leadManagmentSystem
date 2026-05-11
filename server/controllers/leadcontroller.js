@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 
+// Get all leads
 const getLeads = async (req, res) => {
   try {
     const result = await pool.query(
@@ -8,55 +9,58 @@ const getLeads = async (req, res) => {
 
     res.json(result.rows);
   } catch (error) {
-    console.log(error);
+    console.log("DATABASE ERROR:", error);
+
     res.status(500).json({
-      message: "Server Error",
+      error: error.message,
     });
   }
 };
 
-module.exports = {
-  getLeads,
-};
+// Add new lead
 const addLead = async (req, res) => {
   try {
     const { name, phone, source } = req.body;
 
-    if (!name || !phone || !source) {
-      return res.status(400).json({
-        message: "All fields are required",
-      });
-    }
-
     const result = await pool.query(
-      "INSERT INTO leads (name, phone, source) VALUES ($1,$2,$3) RETURNING *",
-      [name, phone, source]
+      "INSERT INTO leads (name, phone, source, status) VALUES ($1, $2, $3, $4) RETURNING *",
+      [name, phone, source, "New"]
     );
 
     res.json(result.rows[0]);
   } catch (error) {
-    console.log("DATABASE ERROR:", error);
-    
-    res.status(500).json(error.message);
+    console.log(error);
+
+    res.status(500).json({
+      error: error.message,
+    });
   }
 };
 
-const updateLead = async (req, res) => {
+// Update status
+const updateLeadStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
 
-    const result = await pool.query(
-      "UPDATE leads SET status=$1 WHERE id=$2 RETURNING *",
+    await pool.query(
+      "UPDATE leads SET status=$1 WHERE id=$2",
       [status, id]
     );
 
-    res.json(result.rows[0]);
+    res.json({
+      message: "Status updated",
+    });
   } catch (error) {
-    res.status(500).json(error.message);
+    console.log(error);
+
+    res.status(500).json({
+      error: error.message,
+    });
   }
 };
 
+// Delete lead
 const deleteLead = async (req, res) => {
   try {
     const { id } = req.params;
@@ -67,16 +71,20 @@ const deleteLead = async (req, res) => {
     );
 
     res.json({
-      message: "Lead deleted successfully",
+      message: "Lead deleted",
     });
   } catch (error) {
-    res.status(500).json(error.message);
+    console.log(error);
+
+    res.status(500).json({
+      error: error.message,
+    });
   }
 };
 
 module.exports = {
   getLeads,
   addLead,
-  updateLead,
+  updateLeadStatus,
   deleteLead,
 };
