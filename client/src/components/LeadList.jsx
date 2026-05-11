@@ -17,7 +17,7 @@ function LeadList({ leads, fetchLeads }) {
   const deleteLead = async (id) => {
     try {
       await axios.delete(
-        `https://leadmanagmentsystem-1.onrender.com/${id}`
+        `https://leadmanagmentsystem-1.onrender.com/api/leads${id}`
       );
 
       fetchLeads();
