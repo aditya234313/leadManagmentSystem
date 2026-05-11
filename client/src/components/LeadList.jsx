@@ -4,7 +4,7 @@ function LeadList({ leads, fetchLeads }) {
   const updateStatus = async (id, status) => {
     try {
       await axios.put(
-        `https://leadmanagmentsystem-1.onrender.com/${id}`,
+        `https://leadmanagmentsystem-1.onrender.com/api/leads/${id}`,
         { status }
       );
 

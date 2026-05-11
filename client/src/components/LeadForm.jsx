@@ -29,7 +29,7 @@ function LeadForm({ fetchLeads }) {
 
     try {
       await axios.post(
-        "https://leadmanagmentsystem-1.onrender.com",
+        "https://leadmanagmentsystem-1.onrender.com/api/leads",
         formData
       );
 
